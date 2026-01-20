@@ -1,0 +1,29 @@
+"use client";
+import { Button } from "@/components/ui/button"
+import { redirect } from "next/navigation"
+import { Modal } from "@/components/ui/modal";
+
+
+import { useStoreModal } from "@/hooks/use-store-modal";
+
+import { useEffect } from "react";
+
+const Home=()=> {
+  const onOpen = useStoreModal((state)=> state.onOpen);
+  const isOpen= useStoreModal((state)=> state.isOpen);
+  const onClose =useStoreModal((state)=>state.onClose);
+
+  useEffect(()=>{
+    if(!isOpen){
+      onOpen();
+    }
+  },[isOpen,onOpen]);
+
+  return (
+    <div className="p-4">
+
+    </div>
+  );
+}
+
+export default Home;
