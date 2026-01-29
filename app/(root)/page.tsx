@@ -1,29 +1,24 @@
 "use client";
-import { Button } from "@/components/ui/button"
-import { redirect } from "next/navigation"
-import { Modal } from "@/components/ui/modal";
-
-
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useStoreModal } from "@/hooks/use-store-modal";
 
-import { useEffect } from "react";
+const Home = () => {
+  const { isSignedIn } = useAuth();
+  const router = useRouter();
+  const onOpen = useStoreModal((state) => state.onOpen);
+  const isOpen = useStoreModal((state) => state.isOpen);
 
-const Home=()=> {
-  const onOpen = useStoreModal((state)=> state.onOpen);
-  const isOpen= useStoreModal((state)=> state.isOpen);
-  const onClose =useStoreModal((state)=>state.onClose);
-
-  useEffect(()=>{
-    if(!isOpen){
+  useEffect(() => {
+    if (!isSignedIn) {
+      router.replace("/sign-in");
+    } else if (!isOpen) {
       onOpen();
     }
-  },[isOpen,onOpen]);
+  }, [isSignedIn, isOpen, onOpen, router]);
 
-  return (
-    <div className="p-4">
-
-    </div>
-  );
-}
+  return <div className="p-4"></div>;
+};
 
 export default Home;
